@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Book_Managment_SYS.Models.Book>;
+@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewData["title"] = "Book List";
+
+}
+<div class="container-fluid">
+
+    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 row">
+            <div class="col-md-9">
+
+                <h6 class="m-0 font-weight-bold text-primary">Book List</h6>
+            </div>
+            <div class="col-md-3">
+
+                <form method="get" asp-action="BookIndex" asp-controller="Dashboard" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="search" class="form-control  border-0 small" placeholder="Search for..."
+                               aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Book Id</th>
+                            <th>Book Title</th>
+                            <th>Book Author</th>
+                            <th>Book Category</th>
+                            <th>Book Pages</th>
+                            <th>Book Price</th>
+                            <th>Book Image</th>
+                            <th>Book Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int id = 1; 
+                        } 
+                         @foreach (var data in Model) 
+                         { 
+
+                             <tr> 
+                                 <td>@id</td> 
+                                 <td>@data.book_title</td>
+                                <td>@data.book_author</td>
+                                <td><img src="@data.Category.category_image" width="30" /> @data.Category.category_name</td>
+                                <td>@data.book_pages</td>
+                                <td>@data.book_price</td>
+                                <td><img src="@data.book_img"  width="50"/></td>
+                                <td>@data.book_desc</td>
+                                <td> 
+                                     <a asp-area="" asp-controller="Dashboard" asp-action="BookEdit" class="btn btn-primary" asp-route-id="@data.book_id">Edit</a>
+                                    <a asp-area="" asp-controller="Dashboard" asp-action="BookDelete" class="btn btn-danger" asp-route-id="@data.book_id">Delete</a>
+                                 </td> 
+                             </tr> 
+                        id++; 
+
+                         }
+
+
+
+
+                    </tbody>
+                </table>
+                <a asp-area="" asp-controller="Dashboard" asp-action="book_toExcel" class="btn btn-outline-success">Export to Excel </a>
+                <button class="btn btn-outline-success" onclick="window.print()">Print </button>
+
+            </div>
+        </div>
+    </div>
+   
+</div>

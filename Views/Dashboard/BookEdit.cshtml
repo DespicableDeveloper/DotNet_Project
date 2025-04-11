@@ -1,0 +1,43 @@
+﻿@model Book_Managment_SYS.Models.DTO_s.bookDTO
+
+@{
+
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewData["title"] = "Edit Create";
+}
+
+<div class="container-fluid ">
+    <div class="card shadow">
+
+        <div class="card-header">
+
+            <h1 class="text-dark">Edit Form</h1>
+        </div>
+        <div class="card-body text-start">
+
+            <form asp-area="" asp-controller="Dashboard" asp-action="BookEditAction" asp-route-id="@ViewBag.id" class=" d-block m-auto" method="post" enctype="multipart/form-data">
+                <label class="form-label text-dark">Book Title *</label>
+                <input type="text" class="form-control" asp-for="book_title"  placeholder="Enter a Book Title">
+                <label class="form-label text-dark">Book Author *</label>
+                <input type="text" class="form-control" asp-for="book_author" placeholder="Enter a Book Author">
+                <label class="form-label text-dark">Book Category *</label>
+                <select asp-for="book_category" asp-items="@ViewBag.data" class="form-control text-capitalize">
+                    <option value="" disabled selected>Select Category</option>
+                </select>
+                <label class="form-label text-dark">Book Pages *</label>
+                <input type="number" class="form-control" asp-for="book_pages" placeholder="Enter a Book Pages">
+                <label class="form-label text-dark">Book Price *</label>
+                <input type="number" class="form-control" asp-for="book_price" placeholder="Enter a Book Price">
+                <img src="@Model.oldimage" width="100" class="my-3 d-block" alt="Image is Not Found" />
+                
+                <input type="hidden" asp-for="oldimage" value="@Model.book_img" />
+                <label class="form-label text-dark">Book Image *</label>
+                <input type="file" class="form-control" asp-for="book_img">
+                <label class="form-label text-dark">Book Desc <sapn class="text-secondary">(Optional)</sapn></label>
+                <textarea rows="5" class="form-control" asp-for="book_desc" placeholder="Enter a Book Description"></textarea>
+                <button type="submit" class="btn btn-success my-2 ">Update</button>
+
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,112 @@
+﻿@model X.PagedList.IPagedList<Book_Managment_SYS.Models.Category>;
+@using X.PagedList.Mvc.Core
+@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewData["title"] = "Book List";
+
+}
+<div class="container-fluid">
+
+    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 row align-items-center">
+            <div class="col-md-9 d-flex">
+
+                <h6 class="m-0 font-weight-bold text-primary">Category List</h6>
+
+            </div>
+            <div class="col-md-3">
+                <form method="get" asp-area="" asp-controller="Dashboard" asp-action="CategoryIndex" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="search" class="form-control  border-0 small" placeholder="Search for..."
+                        aria-label="Search" aria-describedby="basic-addon2" name="searchquery" value="@Context.Request.Query["searchquery"]">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                @if (ViewBag.NotFound !=null) { 
+                    <div class="h4 text-warning">@ViewBag.NotFound</div>
+                }
+                else{
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Category Id</th>
+                            <th>Category Name</th>
+                            <th>Category Image</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        
+                        @{
+                                int id = (Model.PageNumber - 1) * Model.PageSize + 1;
+                        }
+                        @foreach (var data in Model)
+                        {
+
+                            <tr>
+                                <td>@id</td>
+                                <td>@data.category_name</td>
+                                    <td><img src="@data.category_image" style="height:30px;" class="rounded rounded-circle" /></td>
+
+                                <td>
+                                        <a asp-area="" asp-controller="Dashboard" asp-action="CategoryEdit" class="btn btn-primary" asp-route-id="@data.Id">Edit</a>
+                                        <a asp-area="" asp-controller="Dashboard" asp-action="CategoryDelete" class="btn btn-danger" asp-route-id="@data.Id">Delete</a>
+                                </td>
+                            </tr>
+                            id++;
+
+                        }
+
+
+
+
+                    </tbody>
+                </table>
+                }
+                <a asp-area="" asp-controller="Dashboard" asp-action="category_toExcel" class="btn btn-outline-success @(ViewBag.NotFound !=null ?"disabled":"")">Export to Excel </a>
+                <button class="btn btn-outline-success @(ViewBag.NotFound !=null ?"disabled":"")" onclick="@(ViewBag.NotFound ==null ?"window.print()":"")">Print </button>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-12">
+            @if (Model.PageCount > 1)
+            {
+                <a href="@Url.Action("CategoryIndex", new { page = Model.PageNumber - 1, searchquery = Context.Request.Query["searchquery"] })"
+                   class="btn btn-primary @(Model.HasPreviousPage ? "" : "disabled")">
+                    Previous
+                </a>
+
+                @for (var i = 1; i <= Model.PageCount; i++)
+                {
+                    <a href="@Url.Action("CategoryIndex", new { page = i, searchquery = Context.Request.Query["searchquery"] })"
+                       class="btn btn-light border @(i == Model.PageNumber ? "active" : "")">
+                        @i
+                    </a>
+                }
+
+                <a href="@Url.Action("CategoryIndex", new { page = Model.PageNumber + 1, searchquery = Context.Request.Query["searchquery"] })"
+                   class="btn btn-primary @(Model.HasNextPage ? "" : "disabled")">
+                    Next
+                </a>
+            }
+            else
+            {
+                <span class="text-muted">No pages available</span>
+            }
+        </div>
+    </div>
+
+</div>

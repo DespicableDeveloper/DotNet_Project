@@ -1,0 +1,33 @@
+﻿@model Book_Managment_SYS.Models.DTO_s.categoryDTO
+@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewData["title"] = "Category Edit";
+}
+
+<div class="container-fluid ">
+    <div class="card shadow">
+
+        <div class="card-header">
+
+            <h1 class="text-dark">Edit Form</h1>
+        </div>
+        <div class="card-body text-start">
+
+            <form asp-area="" asp-controller="Dashboard" asp-action="CategoryEditAction" asp-route-id="@ViewBag.id" class=" d-block m-auto" method="post" enctype="multipart/form-data">
+                <label class="form-label text-dark">Category Name *</label>
+                
+                <input type="text" class="form-control" asp-for="category_name" placeholder="Enter a Category Name">
+                <input type="hidden" asp-for="category_oldImg" value="@ViewBag.img"/>
+                <label class="form-label text-dark">Category Old Image :</label>
+                <img src="@ViewBag.img" width="100" alt="Alternate Text" />
+                <br>
+                <label class="form-label text-dark">Category Image </label>
+                <input type="file" class="form-control" asp-for="category_image">
+
+
+                <button type="submit" class="btn btn-success my-2 ">Update</button>
+
+            </form>
+        </div>
+    </div>
+</div>

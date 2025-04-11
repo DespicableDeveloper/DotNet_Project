@@ -1,0 +1,27 @@
+﻿@model Book_Managment_SYS.Models.DTO_s.categoryDTO
+@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewData["title"] = "Category Create";
+}
+
+<div class="container-fluid ">
+    <div class="card shadow">
+
+    <div class="card-header">
+
+    <h1 class="text-dark">Create Form</h1>
+    </div>
+    <div class="card-body text-start">
+
+    <form asp-area="" asp-controller="Dashboard" asp-action="CategoryCreateAction" class=" d-block m-auto" method="post" enctype="multipart/form-data">
+        <label class="form-label text-dark">Category Name *</label>
+                <input type="text" class="form-control" asp-for="category_name" placeholder="Enter a Category Name">
+        <label class="form-label text-dark">Category Image *</label>
+        <input type="file" class="form-control" asp-for="category_image">
+
+        <button type="submit" class="btn btn-success my-2 ">Proceed</button>
+
+    </form>
+    </div>
+    </div>
+</div>
